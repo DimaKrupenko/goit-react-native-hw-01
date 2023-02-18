@@ -20,7 +20,9 @@ export default function App() {
           style={styles.image}
           source={require('./assets/images/aa.png')}
         >
-          <KeyboardAvoidingView behavior={Platform.OS == 'ios' && 'padding'}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : ''}
+          >
             {/* <Text>Open up App.js to start working on your app!</Text> */}
             <StatusBar style="auto" />
             {/* <LoginScreen /> */}
