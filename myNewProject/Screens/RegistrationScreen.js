@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const RegistrationScreen = () => {
+const RegistrationScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,43 +34,52 @@ const RegistrationScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        {/* <ImageBackground
+        <ImageBackground
           style={styles.image}
-          source={require('../assets/images/background.jpg')}
-        > */}
-        {/* <KeyboardAvoidingView
-          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-        > */}
-        <View style={styles.form}>
-          <Text style={styles.formText}>Регистрация</Text>
-          <TextInput
-            value={name}
-            onChangeText={nameHandler}
-            placeholder="Логин"
-            style={styles.input}
-            onFocus={() => setIsShowKeyboard(true)}
-          />
-          <TextInput
-            value={email}
-            onChangeText={emailHandler}
-            placeholder="Адрес электронной почты"
-            style={styles.input}
-            onFocus={() => setIsShowKeyboard(true)}
-          />
-          <TextInput
-            value={password}
-            onChangeText={passwordHandler}
-            secureTextEntry={true}
-            placeholder="Пароль"
-            style={styles.input}
-            onFocus={() => setIsShowKeyboard(true)}
-          />
-          <TouchableOpacity style={styles.button} onPress={onRegistration}>
-            <Text style={styles.btnTitle}>Зарегистрироваться</Text>
-          </TouchableOpacity>
-        </View>
-        {/* </KeyboardAvoidingView> */}
-        {/* </ImageBackground> */}
+          source={require('../assets/images/aa.png')}
+        >
+          <KeyboardAvoidingView
+            behavior={Platform.OS == 'ios' ? 'padding' : ''}
+          >
+            <View
+              style={{
+                ...styles.form,
+                marginBottom: isShowKeyboard ? 10 : 0,
+              }}
+              // style={styles.form}
+            >
+              <Text style={styles.formText}>Регистрация</Text>
+              <TextInput
+                value={name}
+                onChangeText={nameHandler}
+                placeholder="Логин"
+                style={styles.input}
+                onFocus={() => setIsShowKeyboard(true)}
+              />
+              <TextInput
+                value={email}
+                onChangeText={emailHandler}
+                placeholder="Адрес электронной почты"
+                style={styles.input}
+                onFocus={() => setIsShowKeyboard(true)}
+              />
+              <TextInput
+                value={password}
+                onChangeText={passwordHandler}
+                secureTextEntry={true}
+                placeholder="Пароль"
+                style={styles.input}
+                onFocus={() => setIsShowKeyboard(true)}
+              />
+              <TouchableOpacity style={styles.button} onPress={onRegistration}>
+                <Text style={styles.btnTitle}>Зарегистрироваться</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text>Уже есть аккаунт? Войти</Text>
+              </TouchableOpacity>
+            </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -79,22 +88,25 @@ const RegistrationScreen = () => {
 const styles = StyleSheet.create({
   conteiner: {
     flex: 1,
-    justifyContent: 'flex-end',
-    // width: '100%',
+    // justifyContent: 'flex-end',
+    width: '100%',
   },
   image: {
-    flex: 1,
+    // flex: 1,
     resizeMode: 'cover',
-    justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
   },
   form: {
-    marginHorizontal: 30,
+    // marginHorizontal: 30,
     // flex: 1,
-
     backgroundColor: '#FFFFFF',
-    borderRadius: 25,
-    width: 375,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+
+    width: 395,
     height: 549,
     justifyContent: 'center',
     alignItems: 'center',
