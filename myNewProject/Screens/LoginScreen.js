@@ -4,10 +4,12 @@ import {
   StyleSheet,
   TextInput,
   Button,
+  Text,
   Keyboard,
   secureTextEntry,
   TouchableWithoutFeedback,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from 'react-native';
 
 // const InitialState = {
@@ -38,12 +40,14 @@ const LoginScreen = () => {
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         >
           <View
-            style={{ ...styles.form, marginBottom: isShowKeyboard ? 20 : 100 }}
+            // style={{ ...styles.form, marginBottom: isShowKeyboard ? 20 : 100 }}
+            style={styles.form}
           >
+            <Text style={styles.formText}>Войти</Text>
             <TextInput
               value={email}
               onChangeText={emailHandler}
-              placeholder="Email"
+              placeholder="Адрес элекстронной почты"
               style={styles.input}
               onFocus={() => setIsShowKeyboard(true)}
 
@@ -55,7 +59,7 @@ const LoginScreen = () => {
               value={password}
               onChangeText={passwordHandler}
               secureTextEntry={true}
-              placeholder="Password"
+              placeholder="Пароль"
               style={styles.input}
               onFocus={() => setIsShowKeyboard(true)}
 
@@ -63,7 +67,9 @@ const LoginScreen = () => {
               //   setUser(prevState => ({ ...prevState, password: value }))
               // }
             />
-            <Button title={'Log In'} onPress={onRegistration} />
+            <TouchableOpacity style={styles.button} onPress={onRegistration}>
+              <Text style={styles.btnTitle}>Войти</Text>
+            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </View>
@@ -80,14 +86,39 @@ const styles = StyleSheet.create({
   },
   form: {
     marginHorizontal: 40,
+    // flex: 1,
+
+    backgroundColor: '#FFFFFF',
+    borderRadius: 25,
+    width: 375,
+    height: 549,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formText: {
+    color: '#fffff',
+    marginBottom: 33,
+    fontSize: 30,
+  },
+  button: {
+    // flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '#FF6C00',
+    gap: 12,
+    padding: 16,
+    // height: 50,
+    width: 343,
+    borderRadius: 100,
+    marginTop: 47,
   },
   input: {
-    width: 200,
+    width: 343,
     height: 44,
     padding: 10,
     borderWidth: 1,
     borderColor: 'black',
-    marginBottom: 10,
+    marginBottom: 16,
     borderRadius: 10,
   },
 });

@@ -41,23 +41,19 @@ const RegistrationScreen = () => {
         {/* <KeyboardAvoidingView
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
         > */}
-        <View
-          style={{
-            ...styles.form,
-            marginBottom: isShowKeyboard ? 20 : 100,
-          }}
-        >
+        <View style={styles.form}>
+          <Text style={styles.formText}>Регистрация</Text>
           <TextInput
             value={name}
             onChangeText={nameHandler}
-            placeholder="Name"
+            placeholder="Логин"
             style={styles.input}
             onFocus={() => setIsShowKeyboard(true)}
           />
           <TextInput
             value={email}
             onChangeText={emailHandler}
-            placeholder="Email"
+            placeholder="Адрес электронной почты"
             style={styles.input}
             onFocus={() => setIsShowKeyboard(true)}
           />
@@ -65,12 +61,12 @@ const RegistrationScreen = () => {
             value={password}
             onChangeText={passwordHandler}
             secureTextEntry={true}
-            placeholder="Password"
+            placeholder="Пароль"
             style={styles.input}
             onFocus={() => setIsShowKeyboard(true)}
           />
           <TouchableOpacity style={styles.button} onPress={onRegistration}>
-            <Text style={styles.btnTitle}>Registration</Text>
+            <Text style={styles.btnTitle}>Зарегистрироваться</Text>
           </TouchableOpacity>
         </View>
         {/* </KeyboardAvoidingView> */}
@@ -83,7 +79,7 @@ const RegistrationScreen = () => {
 const styles = StyleSheet.create({
   conteiner: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     // width: '100%',
   },
   image: {
@@ -93,22 +89,40 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   form: {
-    // marginHorizontal: 30,
+    marginHorizontal: 30,
+    // flex: 1,
+
+    backgroundColor: '#FFFFFF',
+    borderRadius: 25,
+    width: 375,
+    height: 549,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  formText: {
+    color: '#fffff',
+    marginBottom: 33,
+    fontSize: 30,
   },
   button: {
+    // flex: 1,
+    flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#00BFFF',
-    padding: 10,
-    height: 50,
-    borderRadius: 30,
+    backgroundColor: '#FF6C00',
+    gap: 12,
+    padding: 16,
+    // height: 50,
+    width: 343,
+    borderRadius: 100,
+    marginTop: 47,
   },
   input: {
-    width: 200,
+    width: 343,
     height: 44,
     padding: 10,
     borderWidth: 1,
     borderColor: 'black',
-    marginBottom: 10,
+    marginBottom: 16,
     borderRadius: 10,
   },
   btnTitle: {
