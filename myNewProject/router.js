@@ -30,7 +30,9 @@ const useRoute = isAuth => {
     );
   }
   return (
-    <MainTab.Navigator tabBarOptions={{ showLabel: false }}>
+    <MainTab.Navigator
+    // tabBarOptions={{ showLabel: false }}
+    >
       <MainTab.Screen
         options={{
           headerShown: false,
