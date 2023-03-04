@@ -1,21 +1,36 @@
 import React from 'react';
-import { Camera, CameraType } from 'expo-camera';
+import { Camera } from 'expo-camera';
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
+import * as Location from 'expo-location';
 
-const CreatePostScreen = () => {
+const CreatePostScreen = ({ navigation }) => {
   const [cameraRef, setCameraRef] = useState(null);
   const [photo, setPhoto] = useState('');
 
   const takePhoto = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync();
+      const location = await Location.getCurrentPositionAsync({});
       await MediaLibrary.createAssetAsync(photo.uri);
       setPhoto(photo.uri);
     }
   };
+
+  const sendPhoto = () => {
+    navigation.navigate('Home', { photo });
+  };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== 'granted') {
+  //       setErrorMsg('Permission to access location was denied');
+  //       return;
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <View style={styles.conteiner}>
@@ -29,15 +44,19 @@ const CreatePostScreen = () => {
           <View style={styles.takePhotoConteiner}>
             <Image
               source={{ uri: photo }}
-              style={{ height: 200, width: 200 }}
+              style={{ height: 200, width: 200, borderRadius: 10 }}
             />
           </View>
         )}
-
         <TouchableOpacity onPress={takePhoto} style={styles.snapConteiner}>
           <Text style={styles.snap}>SNAP</Text>
         </TouchableOpacity>
       </Camera>
+      <View>
+        <TouchableOpacity onPress={sendPhoto} style={styles.sendBtn}>
+          <Text style={styles.sendLabel}>SEND</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -47,10 +66,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   camera: {
-    // height: 300,
-    // marginTop: 50,
+    // height: 50,
+    marginTop: 40,
+    // marginBottom: 50,
+    marginHorizontal: 10,
+    borderRadius: 10,
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   snap: {
     color: 'white',
@@ -58,10 +81,10 @@ const styles = StyleSheet.create({
   snapConteiner: {
     borderWidth: 1,
     borderColor: 'red',
-    marginTop: 650,
+    marginBottom: 10,
     width: 70,
     height: 70,
-    borderRadius: 50,
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -69,8 +92,24 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     left: 10,
+    borderRadius: 10,
     borderColor: '#fff',
     borderWidth: 1,
+  },
+  sendBtn: {
+    marginHorizontal: 30,
+    height: 40,
+    borderWidth: 2,
+    borderColor: '#20b2aa',
+    borderRadius: 10,
+    marginTop: 20,
+    marginBottom: 130,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sendLabel: {
+    color: '#20b2aa',
+    fontSize: 20,
   },
 });
 
