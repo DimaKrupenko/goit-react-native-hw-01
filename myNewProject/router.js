@@ -37,7 +37,7 @@ const useRoute = isAuth => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
-            <Ionicons name="grid-outline" size={size} color="color" />;
+            return <Ionicons name="grid-outline" size={size} color="color" />;
           },
         }}
         name="Posts"
@@ -47,7 +47,9 @@ const useRoute = isAuth => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
-            <Ionicons name="md-add-circle-outline" size={24} color="black" />;
+            return (
+              <Ionicons name="md-add-circle-outline" size={24} color="black" />
+            );
           },
         }}
         name="Create"
@@ -58,7 +60,7 @@ const useRoute = isAuth => {
         options={{
           headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
-            <SimpleLineIcons name="user" size={24} color="black" />;
+            return <SimpleLineIcons name="user" size={24} color="black" />;
           },
         }}
         name="Profile"

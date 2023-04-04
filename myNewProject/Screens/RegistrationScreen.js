@@ -12,23 +12,25 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { authSignUpUser } from '../redux/auth/authOperations';
 
+const initialState = {
+  name: '',
+  email: '',
+  password: '',
+};
 const RegistrationScreen = ({ navigation }) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [state, setState] = useState(initialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
-  const nameHandler = text => setName(text);
-  const emailHandler = text => setEmail(text);
-  const passwordHandler = text => setPassword(text);
+  const dispatch = useDispatch();
 
   const onRegistration = () => {
-    console.log('name:', name, 'email:', email, 'password:', password);
+    // console.log(state);
     Keyboard.dismiss();
-    setName('');
-    setEmail('');
-    setPassword('');
+    dispatch(authSignUpUser(state));
+    setState(initialState);
     setIsShowKeyboard(false);
   };
   return (
@@ -50,22 +52,28 @@ const RegistrationScreen = ({ navigation }) => {
             >
               <Text style={styles.formText}>Регистрация</Text>
               <TextInput
-                value={name}
-                onChangeText={nameHandler}
+                value={state.name}
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, name: value }))
+                }
                 placeholder="Логин"
                 style={styles.input}
                 onFocus={() => setIsShowKeyboard(true)}
               />
               <TextInput
-                value={email}
-                onChangeText={emailHandler}
+                value={state.email}
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, email: value }))
+                }
                 placeholder="Адрес электронной почты"
                 style={styles.input}
                 onFocus={() => setIsShowKeyboard(true)}
               />
               <TextInput
-                value={password}
-                onChangeText={passwordHandler}
+                value={state.password}
+                onChangeText={value =>
+                  setState(prevState => ({ ...prevState, password: value }))
+                }
                 secureTextEntry={true}
                 placeholder="Пароль"
                 style={styles.input}

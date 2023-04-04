@@ -22,16 +22,6 @@ const CreatePostScreen = ({ navigation }) => {
     navigation.navigate('Home', { photo });
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== 'granted') {
-  //       setErrorMsg('Permission to access location was denied');
-  //       return;
-  //     }
-  //   })();
-  // }, []);
-
   return (
     <View style={styles.conteiner}>
       <Camera

@@ -23,10 +23,12 @@ const Home = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            <Image
-              source={{ uri: item.photo }}
-              style={{ width: 350, height: 200 }}
-            />
+            {
+              <Image
+                source={{ uri: item.photo }}
+                style={{ width: 350, height: 200 }}
+              />
+            }
           </View>
         )}
       />
