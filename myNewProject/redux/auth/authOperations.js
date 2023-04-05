@@ -1,5 +1,9 @@
 // import 'firebase/auth';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from '../../firebase/config';
+
+initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const authSignUpUser =
