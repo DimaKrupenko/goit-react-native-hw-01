@@ -1,5 +1,4 @@
-// import firebase from 'firebase/app';
-import 'firebase/auth';
+// import 'firebase/auth';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { app } from '../../firebase/config';
 
@@ -7,7 +6,7 @@ const auth = getAuth();
 const authSignUpUser =
   ({ name, email, password }) =>
   async (dispatch, getState) => {
-    console.log(name, email, password);
+    // console.log(name, email, password);
     await createUserWithEmailAndPassword(auth, name, email, password)
       .then(userCredential => {
         // Signed in
