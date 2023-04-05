@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 // import { getAnalytics } from 'firebase/analytics';
-// import * as firebase from 'firebase';
+// import * as firebase from 'firebase/app';
 // import firebase from 'firebase';
 // import 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
