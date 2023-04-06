@@ -1,20 +1,21 @@
 // import 'firebase/auth';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../../firebase/config';
-
-initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const authSignUpUser =
   ({ email, password }) =>
   async (dispatch, getState) => {
-    console.log(email, password);
+    // console.log(email, password);
+    await initializeApp(firebaseConfig);
     await createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
-        // Signed in
         const user = userCredential.user;
-        // ...
       })
       .catch(error => {
         const errorCode = error.code;
@@ -22,21 +23,21 @@ const authSignUpUser =
         // ..
       });
   };
-// const authSignUpUser =
-//   ({ name, email, password }) =>
-//   async (dispatch, getState) => {
-//     console.log(name, email, password);
 
-//     try {
-//       const user = await app
-//         .auth()
-//         .createUserWithEmailAndPassword(email, password);
-//     } catch (error) {
-//       console.log(error.message);
-//     }
-//   };
-
-const authSignInUser = () => async (dispatch, getState) => {};
+const authSignInUser =
+  ({ email, password }) =>
+  async (dispatch, getState) => {
+    await initializeApp(firebaseConfig);
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
 
 const authSignOutUser = () => async (dispatch, getState) => {};
 

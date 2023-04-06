@@ -12,27 +12,26 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { authSignInUser } from '../redux/auth/authOperations';
 
-// const InitialState = {
-//   email: '',
-//   password: '',
-// };
+const InitialState = {
+  email: '',
+  password: '',
+};
 
 const LoginScreen = ({ navigation }) => {
-  //   const [user, setUser] = useState(InitialState);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [user, setUser] = useState(InitialState);
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
-  const emailHandler = text => setEmail(text);
-  const passwordHandler = text => setPassword(text);
-  const onRegistration = () => {
-    console.log('email:', email, 'password:', password);
+  const dispatch = useDispatch();
+
+  const handleSubmit = () => {
+    console.log('email:', user.email, 'password:', user.password);
     Keyboard.dismiss();
     setIsShowKeyboard(false);
-    setEmail('');
-    setPassword('');
-    // setUser(InitialState);
+    dispatch(authSignInUser(user));
+    setUser(InitialState);
   };
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -53,29 +52,25 @@ const LoginScreen = ({ navigation }) => {
             >
               <Text style={styles.formText}>Войти</Text>
               <TextInput
-                value={email}
-                onChangeText={emailHandler}
+                value={user.email}
+                onChangeText={value =>
+                  setUser(prevState => ({ ...prevState, email: value }))
+                }
                 placeholder="Адрес элекстронной почты"
                 style={styles.input}
                 onFocus={() => setIsShowKeyboard(true)}
-
-                // onChange={value =>
-                //   setUser(prevState => ({ ...prevState, email: value }))
-                // }
               />
               <TextInput
-                value={password}
-                onChangeText={passwordHandler}
+                value={user.password}
+                onChangeText={value =>
+                  setUser(prevState => ({ ...prevState, password: value }))
+                }
                 secureTextEntry={true}
                 placeholder="Пароль"
                 style={styles.input}
                 onFocus={() => setIsShowKeyboard(true)}
-
-                // onChange={value =>
-                //   setUser(prevState => ({ ...prevState, password: value }))
-                // }
               />
-              <TouchableOpacity style={styles.button} onPress={onRegistration}>
+              <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                 <Text style={styles.btnTitle}>Войти</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => navigation.navigate('Register')}>
