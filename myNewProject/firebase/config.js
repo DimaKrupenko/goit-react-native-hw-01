@@ -1,5 +1,3 @@
-// import { initializeApp } from 'firebase/app';
-
 const firebaseConfig = {
   apiKey: 'AIzaSyC2pANt8QobFXUwZ3Jph0KMwTU_H-jAgho',
   authDomain: 'mobileapp-a5701.firebaseapp.com',
@@ -9,7 +7,5 @@ const firebaseConfig = {
   appId: '1:734405477273:web:8df9feba90d49c469d4908',
   measurementId: 'G-NFJTE92BTS',
 };
-
-// export const db = initializeApp(firebaseConfig);
 
 export default firebaseConfig;
