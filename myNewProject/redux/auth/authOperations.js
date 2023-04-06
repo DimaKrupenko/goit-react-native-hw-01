@@ -1,4 +1,3 @@
-// import 'firebase/auth';
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,6 +5,8 @@ import {
 } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import firebaseConfig from '../../firebase/config';
+import { useDispatch } from 'react-redux';
+import { authSlice } from './authReducer';
 
 initializeApp(firebaseConfig);
 
@@ -17,6 +18,7 @@ const authSignUpUser =
     await createUserWithEmailAndPassword(auth, email, password)
       .then(userCredential => {
         const user = userCredential.user;
+        dispatch(authSlice.actions.updateUserProfile({ userID: user.uid }));
       })
       .catch(error => {
         const errorCode = error.code;
