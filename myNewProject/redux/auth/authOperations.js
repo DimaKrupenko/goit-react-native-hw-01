@@ -12,13 +12,25 @@ initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const authSignUpUser =
-  ({ email, password }) =>
+  ({ name, email, password }) =>
   async (dispatch, getState) => {
     // console.log(email, password);
     await createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredential => {
-        const user = userCredential.user;
-        dispatch(authSlice.actions.updateUserProfile({ userID: user.uid }));
+      .then(async userCredential => {
+        const user = await userCredential.user;
+
+        await user.updateProfile({
+          displayName: name,
+        });
+
+        const { uid, displayName } = await user;
+        console.log(uid, displayName);
+        dispatch(
+          authSlice.actions.updateUserProfile({
+            userID: uid,
+            nickName: displayName,
+          })
+        );
       })
       .catch(error => {
         const errorCode = error.code;
@@ -43,4 +55,6 @@ const authSignInUser =
 
 const authSignOutUser = () => async (dispatch, getState) => {};
 
-export { authSignInUser, authSignUpUser, authSignOutUser };
+const authStateChangeUser = () => async (dispatch, getState) => {};
+
+export { authSignInUser, authSignUpUser, authSignOutUser, authStateChangeUser };
