@@ -55,6 +55,17 @@ const authSignInUser =
 
 const authSignOutUser = () => async (dispatch, getState) => {};
 
-const authStateChangeUser = () => async (dispatch, getState) => {};
+const authStateChangeUser =
+  (auth, email, password) => async (dispatch, getState) => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
 
 export { authSignInUser, authSignUpUser, authSignOutUser, authStateChangeUser };
