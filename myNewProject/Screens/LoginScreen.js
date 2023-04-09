@@ -27,7 +27,7 @@ const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    console.log('email:', user.email, 'password:', user.password);
+    // console.log('email:', user.email, 'password:', user.password);
     Keyboard.dismiss();
     setIsShowKeyboard(false);
     dispatch(authSignInUser(user));
