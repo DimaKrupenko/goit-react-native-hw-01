@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import useRoute from '../router';
-import { TextInput } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { authStateChangeUser } from '../redux/auth/authOperations';
 
@@ -14,12 +13,10 @@ const Main = () => {
   const { stateChange } = useSelector(state => state.auth);
   //   console.log(state);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   useEffect(() => {
     console.log(stateChange);
-    dispatch(authStateChangeUser({ email, password }));
+    dispatch(authStateChangeUser());
     console.log(stateChange);
     console.log(email, password);
   }, []);
@@ -31,8 +28,6 @@ const Main = () => {
 
   return (
     <NavigationContainer>
-      <TextInput value={email} onChangeText={setEmail} />
-      <TextInput value={password} onChangeText={setPassword} />
       {routing}
     </NavigationContainer>
   );
