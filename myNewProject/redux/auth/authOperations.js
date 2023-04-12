@@ -58,29 +58,31 @@ const authSignInUser =
 
 const authSignOutUser = () => async (dispatch, getState) => {};
 
-const authStateChangeUser = (email, password) => async (dispatch, getState) => {
-  await signInWithEmailAndPassword(auth, email, password)
-    .then(userCredential => {
-      const user = userCredential.user;
-      console.log(user);
-      console.log(email);
+const authStateChangeUser =
+  ({ email, password }) =>
+  async (dispatch, getState) => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+        console.log(user);
+        console.log(email);
 
-      if (user) {
-        dispatch(
-          authSlice.actions.updateUserProfile({
-            userId: user.uid,
-            nickName: user.displayName,
-          })
-        );
-        dispatch(authSlice.actions.authStateChange({ stateChange: true }));
-      }
-      // const user = userCredential.user;
-    })
-    .catch(error => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // ..
-    });
-};
+        if (user) {
+          dispatch(
+            authSlice.actions.updateUserProfile({
+              userId: user.uid,
+              nickName: user.displayName,
+            })
+          );
+          dispatch(authSlice.actions.authStateChange({ stateChange: true }));
+        }
+        // const user = userCredential.user;
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
+  };
 
 export { authSignInUser, authSignUpUser, authSignOutUser, authStateChangeUser };
