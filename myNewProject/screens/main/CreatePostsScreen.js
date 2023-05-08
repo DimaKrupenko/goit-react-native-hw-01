@@ -1,13 +1,34 @@
 import React from 'react';
 import { Camera } from 'expo-camera';
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { firestore } from '../../firebase/config';
+import { collection, addDoc } from 'firebase/firestore';
 
 const CreatePostScreen = ({ navigation }) => {
   const [cameraRef, setCameraRef] = useState(null);
   const [photo, setPhoto] = useState('');
+  const [comment, setComment] = useState('');
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+  }, []);
 
   const takePhoto = async () => {
     if (cameraRef) {
@@ -19,7 +40,24 @@ const CreatePostScreen = ({ navigation }) => {
   };
 
   const sendPhoto = () => {
+    uploadPhotoToServer(photo);
+
     navigation.navigate('Home', { photo });
+  };
+
+  const uploadPhotoToServer = async photo => {
+    const responce = await fetch(photo);
+    const file = await responce.blob();
+
+    const uniquePostId = Date.now().toString();
+
+    const storage = getStorage();
+    const imageRef = ref(storage, `photos/${uniquePostId}`);
+    await uploadBytes(imageRef, file);
+
+    const processedPhoto = await getDownloadURL(imageRef);
+    // console.log(processedPhoto);
+    return processedPhoto;
   };
 
   return (
@@ -43,6 +81,13 @@ const CreatePostScreen = ({ navigation }) => {
         </TouchableOpacity>
       </Camera>
       <View>
+        <View style={styles.inputConteiner}>
+          <TextInput
+            style={styles.input}
+            placeholder="Название ..."
+            onChangeText={setComment}
+          />
+        </View>
         <TouchableOpacity onPress={sendPhoto} style={styles.sendBtn}>
           <Text style={styles.sendLabel}>SEND</Text>
         </TouchableOpacity>
@@ -100,6 +145,15 @@ const styles = StyleSheet.create({
   sendLabel: {
     color: '#20b2aa',
     fontSize: 20,
+  },
+  inputConteiner: {
+    marginHorizontal: 10,
+  },
+  input: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#fff',
+    borderBottomColor: '#20b2aa',
   },
 });
 
