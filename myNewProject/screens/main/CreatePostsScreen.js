@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Camera } from 'expo-camera';
 import { useState, useEffect } from 'react';
 import {
@@ -21,10 +22,16 @@ const CreatePostScreen = ({ navigation }) => {
   const [comment, setComment] = useState('');
   const [location, setLocation] = useState(null);
 
+  const { userId, nickName } = useSelector(state => state.auth);
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
 
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
     })();
@@ -33,16 +40,30 @@ const CreatePostScreen = ({ navigation }) => {
   const takePhoto = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync();
-      const location = await Location.getCurrentPositionAsync({});
+      // const location = await Location.getCurrentPositionAsync({});
       await MediaLibrary.createAssetAsync(photo.uri);
       setPhoto(photo.uri);
     }
   };
 
   const sendPhoto = () => {
-    uploadPhotoToServer(photo);
-
+    uploadPostToServer();
     navigation.navigate('Home', { photo });
+  };
+
+  const uploadPostToServer = async () => {
+    try {
+      const photo = await uploadPhotoToServer(photo);
+      const createPost = await addDoc(collection(firestore, 'posts'), {
+        photo,
+        comment,
+        location: location.coords,
+        userId,
+        nickName,
+      });
+    } catch (error) {
+      console.log('error-message', error.message);
+    }
   };
 
   const uploadPhotoToServer = async photo => {
