@@ -13,7 +13,7 @@ import {
 import * as MediaLibrary from 'expo-media-library';
 import * as Location from 'expo-location';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { firestore } from '../../firebase/config';
+import { firestore, storage } from '../../firebase/config';
 import { collection, addDoc } from 'firebase/firestore';
 
 const CreatePostScreen = ({ navigation }) => {
@@ -46,14 +46,14 @@ const CreatePostScreen = ({ navigation }) => {
     }
   };
 
-  const sendPhoto = () => {
-    uploadPostToServer();
+  const sendPhoto = async () => {
+    await uploadPostToServer();
     navigation.navigate('Home', { photo });
   };
 
   const uploadPostToServer = async () => {
     try {
-      const photo = await uploadPhotoToServer(photo);
+      const photo = await uploadPhotoToServer();
       const createPost = await addDoc(collection(firestore, 'posts'), {
         photo,
         comment,
@@ -66,15 +66,14 @@ const CreatePostScreen = ({ navigation }) => {
     }
   };
 
-  const uploadPhotoToServer = async photo => {
+  const uploadPhotoToServer = async () => {
     const responce = await fetch(photo);
     const file = await responce.blob();
 
     const uniquePostId = Date.now().toString();
 
-    const storage = getStorage();
     const imageRef = ref(storage, `photos/${uniquePostId}`);
-    await uploadBytes(imageRef, file);
+    const res = await uploadBytes(imageRef, file);
 
     const processedPhoto = await getDownloadURL(imageRef);
     // console.log(processedPhoto);
