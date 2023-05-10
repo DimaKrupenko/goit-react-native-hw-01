@@ -1,15 +1,31 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, Button } from 'react-native';
 import { useState, useEffect } from 'react';
+import { firestore } from '../../firebase/config';
+import {
+  collection,
+  query,
+  doc,
+  onSnapshot,
+  updateDoc,
+} from 'firebase/firestore';
 
 const Home = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
-    if (route.params) {
-      setPosts(prevState => [...prevState, route.params]);
+  const getAllPosts = async () => {
+    try {
+      const ref = query(collection(firestore, 'posts'));
+      onSnapshot(ref, snapshot => {
+        setPosts(snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+      });
+    } catch (error) {
+      console.log('error-message', error.message);
     }
-  }, [route.params]);
+  };
+  useEffect(() => {
+    getAllPosts();
+  }, []);
   return (
     <View style={styles.conteiner}>
       <FlatList
