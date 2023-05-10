@@ -48,7 +48,7 @@ const CreatePostScreen = ({ navigation }) => {
 
   const sendPhoto = async () => {
     await uploadPostToServer();
-    navigation.navigate('Home', { photo });
+    navigation.navigate('Home');
   };
 
   const uploadPostToServer = async () => {
