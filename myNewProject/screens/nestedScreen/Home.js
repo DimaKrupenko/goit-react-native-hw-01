@@ -45,20 +45,25 @@ const Home = ({ route, navigation }) => {
                 style={{ width: 350, height: 200 }}
               />
             }
+            <View>
+              <Text>{item.comment}</Text>
+            </View>
+            <View>
+              <Button
+                title="go to map"
+                onPress={() => {
+                  navigation.navigate('Map', { location: item.location });
+                }}
+              />
+              <Button
+                title="go to comments"
+                onPress={() => {
+                  navigation.navigate('Comments');
+                }}
+              />
+            </View>
           </View>
         )}
-      />
-      <Button
-        title="go to map"
-        onPress={() => {
-          navigation.navigate('Map');
-        }}
-      />
-      <Button
-        title="go to comments"
-        onPress={() => {
-          navigation.navigate('Comments');
-        }}
       />
     </View>
   );
