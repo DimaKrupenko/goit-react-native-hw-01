@@ -39,12 +39,11 @@ const Home = ({ route, navigation }) => {
               alignItems: 'center',
             }}
           >
-            {
-              <Image
-                source={{ uri: item.photo }}
-                style={{ width: 350, height: 200 }}
-              />
-            }
+            <Image
+              source={{ uri: item.photo }}
+              style={{ width: 350, height: 200 }}
+            />
+
             <View>
               <Text>{item.comment}</Text>
             </View>
@@ -58,7 +57,7 @@ const Home = ({ route, navigation }) => {
               <Button
                 title="go to comments"
                 onPress={() => {
-                  navigation.navigate('Comments');
+                  navigation.navigate('Comments', { postId: item.id });
                 }}
               />
             </View>
