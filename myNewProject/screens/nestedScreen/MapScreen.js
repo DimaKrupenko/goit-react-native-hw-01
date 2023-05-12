@@ -8,9 +8,9 @@ const MapScreen = ({ route }) => {
     <View style={styles.conteiner}>
       <MapView
         style={styles.map}
-        initialRegion={{
-          longitude,
+        region={{
           latitude,
+          longitude,
           latitudeDelta: '0.1',
           longitudeDelta: '0.1',
         }}
